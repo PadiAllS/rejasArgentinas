@@ -1,5 +1,7 @@
 <?php
 require_once 'header.php';
+require_once './clases/TipoDocumento.php';
+$tiposDocumento = new app\clases\TipoDocumento();
 ?>
 	<div class="row">
 		<div class="col-md-12">
@@ -31,7 +33,14 @@ require_once 'header.php';
 					<label for="tipodocumento">
 						Tipo Documento:
 					</label>
-                                    <input type="texto" class="form-control" id="tipodocumento" name="tipodocumento">
+                                    <select>
+                                        <?php
+                                        foreach ($tiposDocumento->getTipoDoc() as $tipo)
+                                        { 
+                                            echo "<option>$tipo</option>";
+                                        }
+                                        ?>
+                                    </select><br>
 					<label for="nrodocumento">
 						Nro Documento
 					</label>
