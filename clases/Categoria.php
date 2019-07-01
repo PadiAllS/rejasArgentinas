@@ -1,0 +1,195 @@
+<?php
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+declare(strict_types=1);
+namespace app\clases;
+require_once 'Db.php';
+
+use app\clases\Db;
+
+/**
+ * Description of Clientes
+ *
+ * @author norberto
+ */
+class Categoria 
+{
+    protected $idCategoria;
+    protected $nombreCategoria;
+    protected $descipcionCategoria;
+    protected $condicionCategoria;
+   
+
+    public function __construct(string $nombre, string $descripcion, int $id = null) 
+    {
+        $this->nombreCategoria = $nombre;
+        $this->descipcionCategoria = $descripcion;
+        $this->idCategoria = $id;
+        
+    }
+
+    // -------------------- Getters ----------------------
+    public function getIdCategoria(): int {
+        return $this->idCategoria;
+    }
+
+    public function getDescripcionCategoria(): string {
+        return $this->descipcionCategoria;
+    }
+
+    public function getNombreCategoria(): string {
+        return $this->nombreCategoria;
+    }
+
+
+    // --------------------- ----------------------
+
+
+    public function setIdCategoria($valor) {
+        $this->id = intval($valor);
+    }
+
+    public function insertar(): bool {
+        if (!$this->esCategoriaValida()) {
+            return false;
+        }
+        $sql = 'INSERT INTO categoria (nombreCategoria, descipcionCategoria) values (:nombre, :descripcion)';
+
+        $conn = Db::getConexion(); 
+        $pst = $conn->prepare($sql); 
+        $pst->bindValue(':nombre', $this->nombreCategoria);
+        $pst->bindValue(':descripcion', $this->descipcionCategoria);
+        $pst->execute(); 
+        if ($pst->rowCount() === 1) { 
+            $this->setId($conn->lastInsertId()); 
+            return true;
+        } else {
+            return false;
+        }
+        
+    }
+    
+    public function eliminar(): bool 
+    {
+        $sql='delete from categoria where idCategoria = :id';
+        $conn= Db::getConexion();
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':id', $this->idCategoria);
+        $categoriaArray = $stmt->execute();
+        if ($categoriaArray === FALSE) {
+            throw new NullObjectError('Objeto inexistente');
+        }
+        return true;
+    }
+    
+    public static function buscarPorId(int $id): self
+    {
+        $conexion = Db::getConexion();
+        $stmt = $conexion->prepare('select * from categoria where idCategoria = :id');
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
+        $categoriaArray = $stmt->fetch();
+        if($categoriaArray===FALSE){
+            throw new NullObjectError('Objeto inexistente');
+        }
+        
+        return new Categoria($categoriaArray['nombreCategoria'], $categoriaArray['descripcionCategoria'], $categoriaArray['condicionCategoria'], $categoriaArray['idCategoria']);
+        
+    }
+    
+    
+
+    public function esCategoriaValida(): bool {
+        
+        if (strlen($this->nombreCategoria) < 4)     
+        {
+            $this->errores[] = 'El nombre debe tener mas de 3 caracteres';
+        }
+        if (strlen($this->descipcionCategoria) < 11)            
+        {
+            $this->errores[] = 'El apellido debe tener mas de 10 caracteres';
+        }
+        
+        return count($this->errores) === 0;
+    }
+
+    public static function buscarCriteros(string $nombre = '', $descripcion = '', $condicion = ''): array {
+        $sql = "
+            select * from `categoria` 
+                where
+                ( (nombreCategoria like :nombre) OR (:nombretest = '') ) AND
+                ( (descripcionCategoria like :descripcion) OR (:descripciontest = '') ) AND
+                ( (condicionCategoria like :condicion) OR (:condiciontest = '') )
+                ";
+
+        $conn = Db::getConexion(); 
+        $pst = $conn->prepare($sql); 
+         $pst->bindValue(':nombre', '%'.$nombre.'%');
+        $pst->bindValue(':nombretest', $nombre);
+        $pst->bindValue(':descripcion', '%'.$descripcion.'%');
+        $pst->bindValue(':descripciontest', $descripcion);
+        $pst->bindValue(':condicion', '%'.$condicion.'%');
+        $pst->bindValue(':condiciontest', $condicion);
+        $pst->execute(); 
+        $resultado = $pst->fetchAll(); 
+        $listaCategorias = self::listaArreglosAListaCategorias($resultado); 
+        return $listaCategorias; 
+    }
+
+    private static function listaArreglosAListaCategorias(array $listaArreglo): array {
+        $resultado = [];
+        foreach ($listaArreglo as $nuevaCategoria) {
+            $resultado[] = Categoria::crearDesdeParametros($nuevaCategoria);
+        }
+        return $resultado;
+    }
+
+    public static function busquedaRapida(string $criterioRapido = ''): array {
+        if (!$criterioRapido) {
+            return self::buscarCriteros();
+        } else {
+            $sql = "
+                select * from `categoria` 
+                    where
+                    (nombreCategoria like :nombre) OR
+                    (descripcionCategoria like :descripcion)
+                    (condicionCategoria like :condicion)";
+
+            $conn = Db::getConexion(); 
+            $pst = $conn->prepare($sql);
+            $pst->bindValue(':nombre', "%$criterioRapido%"); 
+            $pst->bindValue(':descripcion', "% $criterioRapido%");
+            $pst->bindValue(':condicion', "% $criterioRapido%");
+            $pst->execute(); 
+            $resultado = $pst->fetchAll(); 
+            $listaCategorias = self::listaArreglosAListaCategorias($resultado); 
+            return $listaCategorias; 
+        }
+    }
+
+    public static function crearDesdeParametros(array $parametros): self {
+        $id = !empty($parametros['id']) ? intval($parametros['id']) : null;
+        $nombre = $parametros['nombreCategoria'] ?? null;
+        $descripcion = $parametros['descripcionCategoria'] ?? null;
+        $categoria = new Categoria($nombre, $descripcion, $id);
+        return $categoria;
+    }
+    
+        static function listarCategorias() {
+        $conectar1 = $this->conectar();
+        $sql = "SELECT * FROM categoria";
+        $listadoCategoria = $conectar1->query($sql);
+        $listaCategoria=[];
+        while ($categoria=$listadoCategoria->fetchall()){
+            $listaCategoria[]=$categoria;
+        }
+        return $array;
+    }
+
+
+}
+
+
