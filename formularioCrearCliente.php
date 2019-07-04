@@ -3,16 +3,20 @@ require_once 'header.php';
 require_once './clases/TipoDocumento.php';
 
 $tiposDocumento = new app\clases\TipoDocumento();
+
+if(isset($_SESSION['usuario']))
+{
+    require_once 'menuAdmin.php';
+}
+
 ?>
 
-<div class="row">
-    <div class="col-md-2">
 
-    </div>
 
 
     <div class="col-md-5">
         <form role="form" method="POST" action="crearCliente.php">
+            <h2>Cargar Clientes</h2>
             <div class="form-group">
 
                 <label for="nombreCliente">

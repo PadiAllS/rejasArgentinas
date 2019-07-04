@@ -19,14 +19,15 @@ class Categoria
 {
     protected $idCategoria;
     protected $nombreCategoria;
-    protected $descipcionCategoria;
+    protected $descripcionCategoria;
     protected $condicionCategoria;
    
 
-    public function __construct(string $nombre, string $descripcion, int $id = null) 
+    public function __construct(string $nombre, string $descripcion,  $condicion, int $id = null) 
     {
         $this->nombreCategoria = $nombre;
-        $this->descipcionCategoria = $descripcion;
+        $this->descripcionCategoria = $descripcion;
+        $this->condicionCategoria = $condicion;
         $this->idCategoria = $id;
         
     }
@@ -37,7 +38,10 @@ class Categoria
     }
 
     public function getDescripcionCategoria(): string {
-        return $this->descipcionCategoria;
+        return $this->descripcionCategoria;
+    }
+    public function getCondicionCategoria(): string {
+        return $this->condicionCategoria;
     }
 
     public function getNombreCategoria(): string {
@@ -56,12 +60,12 @@ class Categoria
         if (!$this->esCategoriaValida()) {
             return false;
         }
-        $sql = 'INSERT INTO categoria (nombreCategoria, descipcionCategoria) values (:nombre, :descripcion)';
+        $sql = 'INSERT INTO categoria (nombreCategoria, descripcionCategoria) values (:nombre, :descripcion)';
 
         $conn = Db::getConexion(); 
         $pst = $conn->prepare($sql); 
         $pst->bindValue(':nombre', $this->nombreCategoria);
-        $pst->bindValue(':descripcion', $this->descipcionCategoria);
+        $pst->bindValue(':descripcion', $this->descripcionCategoria);
         $pst->execute(); 
         if ($pst->rowCount() === 1) { 
             $this->setId($conn->lastInsertId()); 
@@ -108,9 +112,9 @@ class Categoria
         {
             $this->errores[] = 'El nombre debe tener mas de 3 caracteres';
         }
-        if (strlen($this->descipcionCategoria) < 11)            
+        if (strlen($this->descripcionCategoria) < 11)            
         {
-            $this->errores[] = 'El apellido debe tener mas de 10 caracteres';
+            $this->errores[] = 'La descripcion debe tener mas de 10 caracteres';
         }
         
         return count($this->errores) === 0;
@@ -171,25 +175,12 @@ class Categoria
     }
 
     public static function crearDesdeParametros(array $parametros): self {
-        $id = !empty($parametros['id']) ? intval($parametros['id']) : null;
+        $id = !empty($parametros['idCategoria']) ? intval($parametros['idCategoria']) : null;
         $nombre = $parametros['nombreCategoria'] ?? null;
         $descripcion = $parametros['descripcionCategoria'] ?? null;
-        $categoria = new Categoria($nombre, $descripcion, $id);
+        $condicion = $parametros['condicionCategoria'] ?? 1;
+        $categoria = new Categoria($nombre, $descripcion, $condicion, $id);
         return $categoria;
     }
     
-        static function listarCategorias() {
-        $conectar1 = $this->conectar();
-        $sql = "SELECT * FROM categoria";
-        $listadoCategoria = $conectar1->query($sql);
-        $listaCategoria=[];
-        while ($categoria=$listadoCategoria->fetchall()){
-            $listaCategoria[]=$categoria;
-        }
-        return $array;
-    }
-
-
 }
-
-
