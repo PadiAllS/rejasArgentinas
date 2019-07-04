@@ -130,7 +130,7 @@ $usuario = new Usuario();
                                         <button type="submit" class="btn btn-success" name="boton">
                                             Acceder
                                         </button>
-                                        <a href="registro.php">
+                                        <a href="crearCliente.php">
                                             <input type="button" class="btn btn-success" value="Registro">
                                         </a>
 
