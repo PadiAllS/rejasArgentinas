@@ -3,6 +3,7 @@
 
 namespace app\clases;
 require_once 'Db.php';
+use app\clases\Db;
 use \PDO;
 
 /**
@@ -101,6 +102,32 @@ class Clientes {
         }
         
     }
+    public function actualizar(): bool {
+        if (!$this->esPersonaValida()) {
+            return false;
+        }
+        $sql= 'UPDATE cliente SET nombreCliente=:nombre, tipoDocCliente =:tipoDoc, nroDocCliente=:nroDoc, direccionCliente=:direccion, mailCliente=:mail, telCliente=:telefono WHERE idCliente=:idCliente';
+        
+    //    $sql = 'INSERT INTO cliente (nombreCliente, tipoDocCliente, nroDocCliente, direccionCliente, mailCliente, telCliente)'
+    //            . ' values (:nombre, :tipoDoc, :nroDoc, :direccion, :mail, :telefono)';
+
+        $conn = Db::getConexion(); 
+        $pst = $conn->prepare($sql);
+        $pst->bindValue(':nombre', $this->nombreCliente);
+        $pst->bindValue(':tipoDoc', $this->tipoDocCliente);
+        $pst->bindValue(':nroDoc', $this->nroDocCliente);
+        $pst->bindValue(':direccion', $this->direccionCliente);
+        $pst->bindValue(':mail', $this->mailCliente);
+        $pst->bindValue(':telefono', $this->telCliente);
+        $pst->bindValue(':idCliente', $this->idCliente);
+        $pst->execute(); 
+        if ($pst->rowCount() === 1) {
+            return true;
+        } else {
+            return false;
+        }
+        
+    }
 
     public function esPersonaValida(): bool 
     {
@@ -191,28 +218,29 @@ class Clientes {
     public static function buscarPorId(int $id): self
     {
         $conexion = Db::getConexion();
-        $stmt = $conexion->prepare('select * from cliente where idCliente = :id');
-        $stmt->bindValue(':id', $id);
-        $stmt->execute();
-        $clienteArray = $stmt->fetch();
+        $pst = $conexion->prepare('select * from cliente where idCliente = :id');
+        $pst->bindValue(':id', $id);
+        $pst->execute();
+        $clienteArray = $pst->fetch();
         // si no hay coincidencia disparo una excepción
         if($clienteArray===FALSE){
             throw new NullObjectError('Objeto inexistente');
         }
         
-        return new Clientes($clienteArray['nombreCliente'], $clienteArray['tipoDocCliente'], $clienteArray['nroDocCliente'], $clienteArray['direccionCliente'], $clienteArray['mailcliente'], $clienteArray['telCliente'], $clienteArray['idCliente']);
+        return new Clientes($clienteArray['nombreCliente'], $clienteArray['tipoDocCliente'], $clienteArray['nroDocCliente'], $clienteArray['direccionCliente'], $clienteArray['mailCliente'], $clienteArray['telCliente'], $clienteArray['idCliente']);
     }
     
     public function eliminar(): bool {
     
         $sql = 'delete from cliente where idCliente = :id';
         $conn = Db::getConexion();
-        $stmt = $conn->prepare($sql);
-        $stmt->bindValue(':id', $this->id);
-        $clienteArray = $stmt->execute();
+        $pst = $conn->prepare($sql);
+        $pst->bindValue(':id', $this->idCliente);
+        $clienteArray = $pst->execute();
         if ($clienteArray === FALSE) {
             throw new NullObjectError('Objeto inexistente');
         }
+        return true;
     }
 
 }

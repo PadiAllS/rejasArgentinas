@@ -26,9 +26,10 @@ class Producto {
     protected $descripcionProducto; //string
     protected $imagenProducto; //string
     protected $precioProducto; //float
+    protected $precioM2Producto; //float
 
 
-function __construct($categid, $codBarra, $nomprod, $stock, $descripcion, $imagen, $precio, $idProd=null)
+function __construct($categid, $codBarra, $nomprod, $stock, $descripcion, $imagen, $precio, $precioM2, $idProd=null)
  {
     $this->idProducto = $idProd;
     $this->categoriaId = $categid;
@@ -38,6 +39,7 @@ function __construct($categid, $codBarra, $nomprod, $stock, $descripcion, $image
     $this->descripcionProducto = $descripcion;
     $this->imagenProducto = $imagen;
     $this->precioProducto = $precio;
+    $this->precioM2Producto = $precioM2;
 
  }
 
@@ -86,6 +88,10 @@ public function getPrecioProducto()
  {
     return $this->precioProducto;
  }
+public function getPrecioM2Producto()
+ {
+    return $this->precioM2Producto;
+ }
 
 public function setPrecioProducto($valor)
  {
@@ -96,8 +102,8 @@ public function setPrecioProducto($valor)
     //    if (!$this->esProductoValido()) {
     //        return false;
     //    }
-        $sql = 'INSERT INTO `producto`(`categoriaId`, `codBarraProducto`, `nombreProducto`, `stockProducto`, `descripcionProducto`, `imagenProducto`, `precioProducto`) '
-                . 'VALUES (:categoria, :codBarra, :nombre, :stock, :descripcion, :imagen, :precio)';
+        $sql = 'INSERT INTO producto(categoriaId, codBarraProducto, nombreProducto, stockProducto, descripcionProducto, imagenProducto, precioProducto, precioM2Producto) '
+                . 'VALUES (:categoria, :codBarra, :nombre, :stock, :descripcion, :imagen, :precio, :precioM2)';
 
         $conn = Db::getConexion(); 
         $pst = $conn->prepare($sql); 
@@ -108,6 +114,38 @@ public function setPrecioProducto($valor)
         $pst->bindValue(':descripcion', $this->descripcionProducto);
         $pst->bindValue(':imagen', $this->imagenProducto);
         $pst->bindValue(':precio', $this->precioProducto);
+        $pst->bindValue(':precioM2', $this->precioM2Producto);
+        
+        $pst->execute(); 
+        if ($pst->rowCount() === 1) { 
+            $this->setId($conn->lastInsertId()); 
+            return true;
+        } else {
+            return false;
+        }
+        
+    }
+    public function actualizar(): bool {
+    //    if (!$this->esProductoValido()) {
+    //        return false;
+    //    }
+        $sql= 'UPDATE producto SET =:categoria,codBarraProducto=codBarra,nombreProducto=:nombre, stockProducto=:stock, descripcionProducto=:descripcion, imagenProducto=:imagene, precioProducto=:precio, precioM2Producto=:precioM2 WHERE idProducto = :idProducto';
+    
+        
+//        $sql = 'INSERT INTO producto(categoriaId, codBarraProducto, nombreProducto, stockProducto, descripcionProducto, imagenProducto, precioProducto, precioM2Producto) '
+//                . 'VALUES (:categoria, :codBarra, :nombre, :stock, :descripcion, :imagen, :precio, :precioM2)';
+
+        $conn = Db::getConexion(); 
+        $pst = $conn->prepare($sql); 
+        $pst->bindValue(':categoria', $this->categoriaId);
+        $pst->bindValue(':codBarra', $this->codBarraProducto);
+        $pst->bindValue(':nombre', $this->nombreProducto);
+        $pst->bindValue(':stock', $this->stockProducto);
+        $pst->bindValue(':descripcion', $this->descripcionProducto);
+        $pst->bindValue(':imagen', $this->imagenProducto);
+        $pst->bindValue(':precio', $this->precioProducto);
+        $pst->bindValue(':precioM2', $this->precioM2Producto);
+        
         $pst->execute(); 
         if ($pst->rowCount() === 1) { 
             $this->setId($conn->lastInsertId()); 
@@ -217,15 +255,16 @@ public function setPrecioProducto($valor)
     }
     
     public static function crearDesdeParametros(array $parametros): self {
-        $id = !empty($parametros['idProducto']) ? intval($parametros['idProducto']) : null;
-        $categoriaId = $parametros['categoriaId'] ?? null;
+        $id = !empty(intval($parametros['idProducto'])) ? intval($parametros['idProducto']) : null;
+        $categoriaId = intval($parametros['categoriaId']) ?? null;
         $codBarraProducto = $parametros['codBarraProducto'] ?? null;
         $nombreProducto = $parametros['nombreProducto'] ?? null;
-        $stockProducto = $parametros['stockProducto'] ?? null;
+        $stockProducto = intval($parametros['stockProducto']) ?? null;
         $descripcionProducto = $parametros['descripcionProducto'] ?? null;
         $imagenProducto = $parametros['imagenProducto'] ?? null;
-        $precioProducto = $parametros['precioProducto'] ?? null;
-        $producto = new Producto($categoriaId, $codBarraProducto, $nombreProducto, $stockProducto, $descripcionProducto, $imagenProducto, $precioProducto, $id);
+        $precioProducto = floatval($parametros['precioProducto']) ?? null;
+        $precioM2Producto = floatval($parametros['precioM2Producto']) ?? null;
+        $producto = new Producto($categoriaId, $codBarraProducto, $nombreProducto, $stockProducto, $descripcionProducto, $imagenProducto, $precioProducto, $precioM2Producto, $id);
         return $producto;
     }
 

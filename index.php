@@ -62,5 +62,5 @@ require_once 'header.php';
 </div>   
 
 <?php
-include_once 'footer.php';
+include_once 'paginas/footer.php';
 ?>

@@ -10,18 +10,15 @@ require_once 'Db.php';
 
 use app\clases\Db;
 
-/**
- * Description of Clientes
- *
- * @author norberto
- */
 class Categoria 
 {
     protected $idCategoria;
     protected $nombreCategoria;
     protected $descripcionCategoria;
     protected $condicionCategoria;
-   
+    protected $errores = [];
+
+
 
     public function __construct(string $nombre, string $descripcion,  $condicion, int $id = null) 
     {
@@ -68,7 +65,61 @@ class Categoria
         $pst->bindValue(':descripcion', $this->descripcionCategoria);
         $pst->execute(); 
         if ($pst->rowCount() === 1) { 
-            $this->setId($conn->lastInsertId()); 
+            $this->setIdCategoria($conn->lastInsertId()); 
+            return true;
+        } else {
+            return false;
+        }
+        
+    }
+    
+    public function actualizar(): bool {
+        if (!$this->esCategoriaValida()) {
+            return false;
+        }
+        $sql = 'UPDATE categoria SET nombreCategoria=:nombre, descripcionCategoria=:descripcion WHERE idCategoria= :idCategoria';
+
+        $conn = Db::getConexion(); 
+        $pst = $conn->prepare($sql); 
+        $pst->bindValue(':nombre', $this->nombreCategoria);
+        $pst->bindValue(':descripcion', $this->descripcionCategoria);
+        $pst->bindValue(':idCategoria', $this->idCategoria);
+        $pst->execute(); 
+        if ($pst->rowCount() === 1) { 
+            return true;
+        } else {
+            return false;
+        }
+        
+    }
+    
+    public function activar(): bool {
+        
+        $sql = 'UPDATE categoria SET condicionCategoria=1 WHERE idCategoira= :idCategoria';
+
+        $conn = Db::getConexion(); 
+        $pst = $conn->prepare($sql); 
+        $pst->bindValue(':idCategoria', $this->idCategoria);
+        //$pst->bindValue(':condicion', $this->condicionCategoria);
+        $pst->execute(); 
+        if ($pst->rowCount() === 1) { 
+            return true;
+        } else {
+            return false;
+        }
+        
+    }
+    
+    public function desactivar(): bool {
+        
+        $sql = 'UPDATE categoria SET condicionCategoria=0 WHERE idCategoira= :idCategoria';
+
+        $conn = Db::getConexion(); 
+        $pst = $conn->prepare($sql); 
+        $pst->bindValue(':idCategoria', $this->idCategoria);
+        //$pst->bindValue(':condicion', $this->condicionCategoria);
+        $pst->execute(); 
+        if ($pst->rowCount() === 1) { 
             return true;
         } else {
             return false;

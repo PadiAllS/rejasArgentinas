@@ -11,7 +11,8 @@
         <meta name="author" content="LayoutIt!">
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link href="css/style.css" rel="stylesheet">
+        <link href="../css/style.css" rel="stylesheet">
+        <link href="../css/fontface.css" rel="stylesheet">
 
     </head>
     <body class="bdy">
@@ -22,7 +23,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12 text-center">
-                    <img alt="logo" src="imagen/LOGO-01.svg" width="50%" height="120px">
+                    <img alt="logo" src="../imagen/LOGO-01.svg" width="50%" height="120px">
                 </div>
             </div>
 
@@ -30,45 +31,47 @@
                 <div class="col-md-12">
                     <ul class="nav">
                         <li class="nav-item">
-                            <a class="nav-link active" href="index.php">Inicio</a>
+                            <a class="nav-link active" href="../index.php">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="productos.php">Productos</a>
+                            <a class="nav-link active" href="../paginas/productos.php">Productos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="nosotros.php">Quienes Somos</a>
+                            <a class="nav-link" href="../paginas/nosotros.php">Quienes Somos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="tutoriales.php">Tutoriales</a>
+                            <a class="nav-link active" href="../paginas/tutoriales.php">Tutoriales</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="presupuesto.php">Presupuesto</a>
+                            <a class="nav-link" href="../paginas/presupuesto.php">Presupuesto</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="contacto.php">Contacto</a>
+                            <a class="nav-link" href="../paginas/contacto.php">Contacto</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="formularioCrearCliente.php">Regisgro</a>
+                            <a class="nav-link" href="../paginas/formularioCrearCliente.php">Regisgro</a>
                         </li>
                         <?php
                         if (!isset($_SESSION['usuario'])) {
                             ?>
                             <li class="nav-item">
+                                
                                 <button type="button" class="btn" data-toggle="modal" data-target="#myModal">
                                     Login
                                 </button>
+                                
                             </li>
                             <?php
                         } else {
                             ?>
                             <li class="nav-item">
-                                <a class="nav-link" href="logout.php">Logout (<?= $_SESSION['usuario'] ?>)</a>
+                                <a class="nav-link" href="../paginas/logout.php">Logout (<?= $_SESSION['usuario'] ?>)</a>
                             </li>
 
 
                             <li class="nav-item">
-                                <a class="nav-link" href="listadoClientes.php">Administrador</a>
+                                <a class="nav-link" href="../paginas/menuAdmin.php">Administrador</a>
                             </li>
 
                             <?php
@@ -98,14 +101,13 @@
 
                             //session_start();
                             require_once 'clases/Usuario.php';
-
                             use app\clases\Usuario;
-
-$usuario = new Usuario();
+                                        
+                            $usuario = new Usuario();
                             if (isset($_POST['boton']) && $usuario->esLoginValido($_POST['username'], $_POST['password'])) {
                                 //echo "login válido";
                                 $_SESSION['usuario'] = $_POST['username'];
-                                header("Location:index.php");
+                                header("Location:../index.php");
                                 exit();
                             } else {
                                 echo "login inválido";
@@ -130,7 +132,7 @@ $usuario = new Usuario();
                                         <button type="submit" class="btn btn-success" name="boton">
                                             Acceder
                                         </button>
-                                        <a href="crearCliente.php">
+                                        <a href="paginas/formularioCrearCliente.php">
                                             <input type="button" class="btn btn-success" value="Registro">
                                         </a>
 

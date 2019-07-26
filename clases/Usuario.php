@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace app\clases;
 require_once 'Db.php';
+use app\clases\Db;
 use \PDO;
 
 
@@ -79,13 +80,14 @@ class Usuario {
     public function eliminar(): bool {
     
         $sql = 'delete from usuario where clienteId = :id';
-        $conn = Db::getConexion();
-        $stmt = $conn->prepare($sql);
-        $stmt->bindValue(':id', $this->id);
-        $usuarioArray = $stmt->execute();
+        $conn= Db::getConexion();
+        $pst = $conn->prepare($sql);
+        $pst->bindValue(':id', $this->clienteId);
+        $usuarioArray = $pst->execute();
         if ($usuarioArray === FALSE) {
             throw new NullObjectError('Objeto inexistente');
         }
+        return true;
     }
 
 

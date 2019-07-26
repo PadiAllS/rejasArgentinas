@@ -1,8 +1,16 @@
 
 .bdy {
     background: #F2F2F2;
+    font-family: 'ubuntu', sans-serif;
 }
 
+body{
+    font-family: 'ubuntu', sans-serif;
+}
+
+table{
+font-family: 'noto-sans', sans-serif;
+}
 /*.column {
   float: left;
   width: 25%;
@@ -48,5 +56,5 @@
   right: 15px;
   color: white;
   font-size: 35px;
-  cursor: pointer;*/
-}
+  cursor: pointer;
+}*/
