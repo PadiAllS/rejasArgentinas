@@ -1,7 +1,7 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-require_once '../paginas/header.php';
+//require_once '../header.php';
 
 if (!isset($_SESSION['usuario']))
 {
@@ -26,7 +26,7 @@ if(isset($_GET['quickSearchCat'])){
 <div class="columna col-md-12">
     <div class="row">
         <div class="col-md-6">
-            <a href="../paginas/formularioCrearCategoria.php" class="btn btn-outline-primary"><i class="fa fa-fw fa-trash"></i> Agregar Categoria</a>
+            <a href="../paginas/formularioCrearCategoria.php" class="btn btn-outline-primary"><i class="fa fa-fw fa-trash"></i>Agregar Categoria <img src="../imagen/botones/botonA.png"></a>
         </div>
         <div class="col-md-6">
             <div class="float-right">
@@ -85,7 +85,7 @@ if(isset($_GET['quickSearchCat'])){
                         ?>
                         </td>
                         <td align="center">
-                            <a href="../paginas/formularioActualizarCategoria.php?modId=<?=$categoria->getIdCategoria()?>" class="btn btn-outline-success"><i class="fa fa-fw fa-trash"></i> Actualizar</a>
+                            <a href="../paginas/formularioActualizarCategoria.php?modId=<?=$categoria->getIdCategoria()?>" class="btn btn-outline-success"><i class="fa fa-fw fa-trash"></i><img src="../imagen/botones/botonM.png"</a>
                         </td>
                         
 

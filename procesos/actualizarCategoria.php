@@ -1,10 +1,19 @@
 <?php
-
+require_once '../clases/Usuario.php';
 require_once '../clases/Categoria.php';
 require_once '../clases/Db.php';
 
+use app\clases\Usuario;
 use app\clases\Db;
 use app\clases\Categoria;
+
+session_start();
+if(!isset($_SESSION['usuario']))
+{
+   $_SESSION['mensaje']= 'Usuario invalido';
+   header('Location:index.php');
+   exit();
+}
 
 if(isset($_POST['btnactualizarCategoria']))
 {
@@ -15,7 +24,7 @@ if(isset($_POST['btnactualizarCategoria']))
             $_SESSION['mensaje'] = 'Error! no se actualizo el registro';
         } else {
             $_SESSION['mensaje'] = "La operacion fue exitosa. La categoria fue actualizada";
-            header('Location:../procesos/listadoCategoria.php');
+            header('Location:../paginas/menuAdmin.php');
             exit();
 
         }
@@ -29,7 +38,7 @@ if(isset($_POST['btnactivarCategoria']))
             $_SESSION['mensaje'] = 'Error! no se actualizo el registro';
         } else {
             $_SESSION['mensaje'] = "La operacion fue exitosa. La categoria fue actualizada";
-            header('Location:../procesos/listadoCategoria.php');
+            header('Location:../paginas/menuAdmin.php');
             exit();
 
         }

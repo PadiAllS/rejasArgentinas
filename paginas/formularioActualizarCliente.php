@@ -1,5 +1,5 @@
 <?php
-require_once 'header.php';
+require_once '../header.php';
 require_once '../clases/TipoDocumento.php';
 
 $tiposDocumento = new app\clases\TipoDocumento();

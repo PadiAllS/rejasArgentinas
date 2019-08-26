@@ -1,5 +1,5 @@
 <?php
-require_once 'header.php';
+require_once '../header.php';
 require_once '../clases/TipoDocumento.php';
 
 $tiposDocumento = new app\clases\TipoDocumento();
@@ -29,7 +29,7 @@ $tiposDocumento = new app\clases\TipoDocumento();
         </div>
         </div>
         
-            <form role="form" method="POST" action="crearCliente.php">
+        <form role="form" method="POST" action="../procesos/crearCliente.php">
                 <div class="form-group">
 
                     <label for="nombreCliente">

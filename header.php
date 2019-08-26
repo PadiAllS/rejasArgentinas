@@ -20,15 +20,21 @@
         session_start();
         ?>
 
-        <div class="container">
+        <div class="container m-3">
             <div class="row">
-                <div class="col-md-12 text-center">
-                    <img alt="logo" src="../imagen/LOGO-01.svg" width="50%" height="120px">
+                <div class="col-md-5">
+                    <img alt="logo" src="../imagen/LOGO-01.svg" width="100%" height="110px">
                 </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
+            
+                <div class="col-md-7">
+                    <nav class="nav navbar-collapse">
+                        <div class="container-fluid">
+                            <div class="navbar-header">
+                                <botton class="navbar-toggle" data-toggle="collapse" data-target=""
+                            </div>
+                        </div>
+                    </nav>
+                    
                     <ul class="nav">
                         <li class="nav-item">
                             <a class="nav-link active" href="../index.php">Inicio</a>
@@ -58,12 +64,14 @@
                             <li class="nav-item">
                                 
                                 <button type="button" class="btn" data-toggle="modal" data-target="#myModal">
-                                    Login
+                                    Login <?= $_SESSION['mensajeLog']??''?>
                                 </button>
                                 
                             </li>
                             <?php
                         } else {
+                            if ($_SESSION['permiso']== 'admin')
+                            {
                             ?>
                             <li class="nav-item">
                                 <a class="nav-link" href="../paginas/logout.php">Logout (<?= $_SESSION['usuario'] ?>)</a>
@@ -73,8 +81,17 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="../paginas/menuAdmin.php">Administrador</a>
                             </li>
+                            <?php
+                            } else {
+                                ?>
+                                <li class="nav-item">
+                                <a class="nav-link" href="../paginas/logout.php">Logout (<?= $_SESSION['usuario'] ?>)</a>
+                                </li>
 
                             <?php
+                            }
+
+                            
                         }
                         ?>
 
@@ -110,6 +127,7 @@
                                 header("Location:../index.php");
                                 exit();
                             } else {
+                                $_SESSION['mensajeLog']='(Usted no se ha identificado)';
                                 echo "login inválido";
                             }
                             ?>
@@ -132,7 +150,7 @@
                                         <button type="submit" class="btn btn-success" name="boton">
                                             Acceder
                                         </button>
-                                        <a href="paginas/formularioCrearCliente.php">
+                                        <a href="../paginas/formularioCrearCliente.php">
                                             <input type="button" class="btn btn-success" value="Registro">
                                         </a>
 

@@ -37,7 +37,7 @@ $pst->execute();
 $conn->commit();
 if($pst->rowCount()===0)
 {
-    $_SESSION['mensaje'] = 'Error! no se borro el registro';
+    $_SESSION['mensaje'] = "Error! no se borro el registro";
 } else {
     $_SESSION['mensaje'] = "La operacion fue exitosa. El cliente fue eliminado";
     header('Location:../paginas/menuAdmin.php');

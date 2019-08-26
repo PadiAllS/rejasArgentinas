@@ -1,5 +1,5 @@
 <?php
-require_once '../paginas/header.php';
+require_once '../header.php';
 require_once '../clases/Producto.php';
 require_once '../clases/Categoria.php';
 
@@ -9,30 +9,29 @@ use app\clases\Categoria;
 $listaCategorias = Categoria::buscarCriteros();
 ?>
 <div class="col-md-8">
-        
-    <form role="form" method="POST" action="../procesos/crearProducto.php">
+
+    <form role="form" method="POST" action="../procesos/crearProducto.php" enctype="multipart/form-data">
         <h2>Cargar Producto</h2>
-            <div class="form-group">
-                <label for="nombreProducto">
-                    Nombre:
-                </label>
-                <input type="text" class="form-control" id="nombreProducto" name="nombreProducto" value='<?= $_POST['nombreProducto']??'' ?>'>
-            </div>
+        <div class="form-group">
+            <label for="nombreProducto">
+                Nombre:
+            </label>
+            <input type="text" class="form-control" id="nombreProducto" name="nombreProducto" value='<?= $_POST['nombreProducto'] ?? '' ?>'>
+        </div>
         <div class="row">
-            <div class="form-group col-md-2">
+            <div class="form-group col-md-6">
                 <label for="categoria">
                     Categoria:
                 </label><br>
                 <select name="categoriaId" >
                     <?php
-                        foreach ($listaCategorias as $categoria) {
-                    ?>
-                            <option><?=$categoria->getIdCategoria() ?></option>;
-                    
-                                
-                    <?php
-                    
-                        }
+                    foreach ($listaCategorias as $categoria) {
+                        ?>
+                        <option value="<?= $categoria->getIdCategoria() ?>"><?= $categoria->getNombreCategoria() ?></option>;
+
+
+                        <?php
+                    }
                     ?>
                 </select>
             </div>
@@ -40,7 +39,7 @@ $listaCategorias = Categoria::buscarCriteros();
                 <label for="codBarraProducto">
                     Cod. de Barras:
                 </label>
-                <input type="text" class="form-control" id="codBarraProducto" name="codBarraProducto" value='<?= $_POST['codBarraProducto']??'' ?>'>
+                <input type="text" class="form-control" id="codBarraProducto" name="codBarraProducto" value='<?= $_POST['codBarraProducto'] ?? '' ?>'>
             </div>
         </div>
         <div class="row">
@@ -48,44 +47,44 @@ $listaCategorias = Categoria::buscarCriteros();
                 <label for="stockProducto">
                     Stock:
                 </label>
-                <input type="text" class="form-control" id="stockProducto" name="stockProducto" value='<?= $_POST['stockProducto']??'' ?>'>
+                <input type="text" class="form-control" id="stockProducto" name="stockProducto" value='<?= $_POST['stockProducto'] ?? '' ?>'>
             </div>
             <div class="form-group col-md-4">
                 <label for="precioProducto">
                     Precio:
                 </label>
-                <input type="text" class="form-control" id="precioProducto" name="precioProducto" value='<?= $_POST['precioProducto']??'' ?>'>
+                <input type="text" class="form-control" id="precioProducto" name="precioProducto" value='<?= $_POST['precioProducto'] ?? '' ?>'>
             </div>
             <div class="form-group col-md-4">
                 <label for="precioM2Producto">
                     Precio x M2:
                 </label>
-                <input type="text" class="form-control" id="precioProducto" name="precioProducto" value='<?= $_POST['precioProducto']??'' ?>'>
+                <input type="text" class="form-control" id="precioM2Producto" name="precioM2Producto" value='<?= $_POST['precioM2Producto'] ?? '' ?>'>
             </div>
         </div>
-                <label for="descripcionProducto">
-                    Descripcion:
-                </label>
-                <input type="text" class="form-control" id="descripcionProducto" name="descripcionProducto" value='<?= $_POST['descripcionProducto']??'' ?>'>
-            
-                <div class="form-group">
-					 
-					<label for="imagenProcutos">
-						Buscar imagen
-					</label>
-                    <input type="file" class="form-control-file" id="imagenProducto" name="imagenProducto" />
-<!--					<p class="help-block">
-						Example block-level help text here.
-					</p>-->
-				</div>
+        <label for="descripcionProducto">
+            Descripcion:
+        </label>
+        <input type="text" class="form-control" id="descripcionProducto" name="descripcionProducto" value='<?= $_POST['descripcionProducto'] ?? '' ?>'>
+        <input type="hidden" name="MAX_FILE_SIZE" value="3000000" />
+        <div class="form-group">
 
-                            
-            <button type="submit" class="btn btn-primary" name="btnGuardarProducto">
-                Guardar
-            </button>
-            </div>
-    </form>
-    
+            <label for="imagenProcutos">
+                Buscar imagen
+            </label>
+            <input type="file" class="form-control-file" id="imagenProducto" name="imagenProducto" />
+<!--					<p class="help-block">
+                                        Example block-level help text here.
+                                </p>-->
+        </div>
+
+
+        <button type="submit" class="btn btn-primary" name="btnGuardarProducto">
+            Guardar
+        </button>
+</div>
+</form>
+
 </div>    
 </div>
 

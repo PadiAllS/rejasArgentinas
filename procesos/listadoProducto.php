@@ -2,7 +2,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-require_once '../paginas/header.php';
+//require_once '../header.php';
 
 if (!isset($_SESSION['usuario'])) {
     $_SESSION['mensaje'] = 'Login Inválido';
@@ -27,13 +27,13 @@ if (isset($_GET['submitProd'])) {
 <div class="columna col-md-12">
     <div class="row">
         <div class="col-md-6">
-            <a href="../paginas/formularioCrearProducto.php" class="btn btn-outline-primary"><i class="fa fa-fw fa-trash"></i> Agregar Producto</a>
+            <a href="../paginas/formularioCrearProducto.php" class="btn btn-outline-primary"><i class="fa fa-fw fa-trash"></i> Agregar Producto <img src="../imagen/botones/botonA.png"></a>
         </div>
         <div class="columna col-md-6">
             <div class="float-right">
             <form role="form" class="form-inline" >
                 <div class="form-group">
-                    <input type="text" class="form-control" id="nombre" name="searchProd" value='<?= $_GET['search'] ?? '' ?>'>
+                    <input type="text" class="form-control" id="nombre" name="searchProd" value='<?= $_GET['searchProd'] ?? '' ?>'>
                 </div>
                 <button type="submit" class="btn btn-primary" name="quickSearchProd">
                     Buscar
@@ -115,10 +115,10 @@ if (isset($_GET['submitProd'])) {
                         <td><?= $producto->getPrecioProducto() ?></td>
                         <td><?= $producto->getPrecioM2Producto() ?></td>
                         <td align="center">
-                            <a href="../paginas/formularioActualizarProducto.php?modId=<?= $producto->getIdProducto() ?>" class="btn btn-outline-success"><i class="fa fa-fw fa-trash"></i> Actualizar</a>
+                            <a href="../paginas/formularioActualizarProducto.php?modId=<?= $producto->getIdProducto() ?>" class="btn btn-outline-success"><i class="fa fa-fw fa-trash"></i><img src="../imagen/botones/botonM.png"</a>
                         </td>
                         <td align="center">
-                            <a href="../procesos/borrarProducto.php?delId=<?= $producto->getIdProducto() ?>" class="btn btn-outline-danger" onClick="return confirm('Está seguro de borrar el Producto seleccionado?');"><i class="fa fa-fw fa-trash"></i> Borrar</a>
+                            <a href="../procesos/borrarProducto.php?delId=<?= $producto->getIdProducto() ?>" class="btn btn-outline-danger" onClick="return confirm('Está seguro de borrar el Producto seleccionado?');"><i class="fa fa-fw fa-trash"></i><img src="../imagen/botones/botonB.png"</a>
                         </td>
                     </tr>
                 <?php } ?>
@@ -128,7 +128,7 @@ if (isset($_GET['submitProd'])) {
 
     </div>
 </div>
-</div>
+
 
 
 

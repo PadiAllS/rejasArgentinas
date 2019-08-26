@@ -239,14 +239,14 @@ public function setPrecioProducto($valor)
                 select * from `producto` 
                     where
                     (nombreProducto like :nombre) OR
-                    (descripcionProducto like :descripcion)
-                    (categoria like :categoria)";
+                    (descripcionProducto like :descripcion)";
+                  //  (categoriaId like ':categoria')";
 
             $conn = Db::getConexion(); 
             $pst = $conn->prepare($sql);
-            $pst->bindValue(':nombre', "%$criterioRapido%"); 
-            $pst->bindValue(':descripcion', "% $criterioRapido%");
-            $pst->bindValue(':categoria', "% $criterioRapido%");
+            $pst->bindValue(':nombre', '%'.$criterioRapido.'%'); 
+            $pst->bindValue(':descripcion', '%'.$criterioRapido.'%');
+            //$pst->bindValue(':categoria', '%'.$criterioRapido.'%');
             $pst->execute(); 
             $resultado = $pst->fetchAll(); 
             $listaProductos = self::listaArreglosAListaProductos($resultado); 

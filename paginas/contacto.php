@@ -1,5 +1,5 @@
 <?php
-require_once 'header.php';
+require_once '../header.php';
 ?>
 
 <div class="container-fluid">
@@ -65,8 +65,14 @@ require_once 'header.php';
 			</div>
 		</div>
 	</div>
+    
 </div>  
 
+<div>
+        <section class="map1 cid-re8eH2bIMC" id="map1-i">
+            <div class="google-map"><iframe frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCy9r70T3NYf3PhvVflTo0_zdif2_IoIYs&amp;q=place_id:EihQdW50YSBOaW5mYXMgMTU2NSwgUsOtbyBOZWdybywgQXJnZW50aW5hIhsSGQoUChIJwQ5fGRIz-pURatxuaSzsbnAQnQw" allowfullscreen=""></iframe></div>
+        </section>
+    </div>
 <?php
 include_once '../paginas/footer.php';
 ?>

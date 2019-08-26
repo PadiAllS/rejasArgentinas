@@ -1,10 +1,19 @@
 <?php
-
+require_once '../clases/Usuario.php';
 require_once '../clases/Producto.php';
 require_once '../clases/Db.php';
 
+use app\clases\Usuario;
 use app\clases\Db;
 use app\clases\Producto;
+
+session_start();
+if(!isset($_SESSION['usuario']))
+{
+   $_SESSION['mensaje']= 'Usuario invalido';
+   header('Location:index.php');
+   exit();
+}
 
 if(isset($_POST['btnActualizarProducto']))
 {

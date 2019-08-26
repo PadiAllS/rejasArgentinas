@@ -1,7 +1,9 @@
 <?php
-
+require_once '../clases/Usuario.php';
 require_once '../clases/Producto.php';
 require_once '../clases/Db.php';
+
+use app\clases\Usuario;
 use app\clases\Producto;
 use app\clases\Db;
 
@@ -38,7 +40,7 @@ if($pst->rowCount()===0)
     $_SESSION['mensaje'] = 'Error! no se borro el registro';
 } else {
     $_SESSION['mensaje'] = "La operacion fue exitosa. El procuto fue eliminado";
-    header('Location:../procesos/listadoProducto.php');
+    header('Location:../paginas/menuAdmin.php');
     exit();
 }
 

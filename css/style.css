@@ -11,6 +11,11 @@ body{
 table{
 font-family: 'noto-sans', sans-serif;
 }
+
+footer{
+    background: #049dd9;
+    margin-top: 20px;  
+}
 /*.column {
   float: left;
   width: 25%;

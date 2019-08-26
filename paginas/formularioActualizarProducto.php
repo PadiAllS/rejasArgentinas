@@ -1,5 +1,5 @@
 <?php
-require_once '../paginas/header.php';
+require_once '../header.php';
 require_once '../clases/Producto.php';
 require_once '../clases/Categoria.php';
 require_once '../clases/Db.php';

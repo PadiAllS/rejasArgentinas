@@ -27,13 +27,13 @@ if(isset($_GET['quickSearchCli'])){
 <div class="row d-flex ">
     <div class="columna col-md-6">
         <div class="">
-            <?php
-                if(isset($_SESSION['mensaje']))
-                {  
-                    echo ($_SESSION['mensaje']);
-                    unset($_SESSION['mensaje']);
-                }
-            ?>
+            //<?php
+//                if(isset($_SESSION['mensaje']))
+//                {  
+//                    echo ($_SESSION['mensaje']);
+//                    unset($_SESSION['mensaje']);
+//                }
+//            ?>
         </div>
     </div>
     <div class="columna col-md-6">
@@ -89,10 +89,10 @@ if(isset($_GET['quickSearchCli'])){
                         <td><?=$cliente->getMailCliente() ?></td>
                         <td><?=$cliente->getTelCliente() ?></td>
                         <td align="center">
-                            <a href="../paginas/formularioActualizarCliente.php?modId=<?=$cliente->getIdCliente()?>" class="btn btn-outline-success"><i class="fa fa-fw fa-trash"></i> Actualizar</a>
+                            <a href="../paginas/formularioActualizarCliente.php?modId=<?=$cliente->getIdCliente()?>" class="btn btn-outline-success"><i class="fa fa-fw fa-trash"></i><img src="../imagen/botones/botonM.png"</a>
                         </td>
                         <td align="center">
-                            <a href="../procesos/borrarCliente.php?delId=<?=$cliente->getIdCliente()?>" class="btn btn-outline-danger" onClick="return confirm('Está seguro de borrar el Cliente seleccionado?');"><i class="fa fa-fw fa-trash"></i> Borrar</a>
+                            <a href="../procesos/borrarCliente.php?delId=<?=$cliente->getIdCliente()?>" class="btn btn-outline-danger" onClick="return confirm('Está seguro de borrar el Cliente seleccionado?');"><i class="fa fa-fw fa-trash"></i><img src="../imagen/botones/botonB.png"</a>
                         </td>
 
 

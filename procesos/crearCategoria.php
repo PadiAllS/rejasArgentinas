@@ -1,6 +1,5 @@
 <?php
 
-require_once '../paginas/header.php';
 require_once '../clases/Categoria.php';
 require_once '../clases/Db.php';
 
@@ -16,10 +15,10 @@ if(isset($_POST['guardarCategoria']))
             $_SESSION['mensaje'] = 'Error! no se actualizo el registro';
         } else {
             $_SESSION['mensaje'] = "La operacion fue exitosa.";
-            header('Location:../procesos/listadoCategoria.php');
-            exit();
-
+//            header('Location:../paginas/menuAdmin.php');
+//            exit();
         }
+        
 }
 
 ?>

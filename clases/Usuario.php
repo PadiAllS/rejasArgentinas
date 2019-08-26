@@ -32,7 +32,10 @@ class Usuario {
         $pst->execute();
         $resultados = $pst->fetchAll();
         if(count($resultados)===1){
+            $_SESSION['permiso']= ($resultados[0]['permiso']);
+            $_SESSION['usuarioId']= ($resultados[0]['clienteId']);
             return password_verify($password, $resultados[0]['password']);
+            
         }else{
             return false;
         }
@@ -46,7 +49,6 @@ class Usuario {
         $pst->bindValue(':username', $this->username, PDO::PARAM_STR);
         $hashPass = password_hash($this->password, PASSWORD_DEFAULT);
         $pst->bindValue(':password', $hashPass, PDO::PARAM_STR);
-  //      $pst->bindValue(':password', $this->password);
         $pst->execute();
         if($pst->rowCount()===1){
             return true; 

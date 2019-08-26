@@ -1,13 +1,20 @@
 <?php
 
-require_once 'header.php';
-require_once 'clases/Clientes.php';
-require_once 'clases/Usuario.php';
-require_once 'clases/Db.php';
+
+require_once '../clases/Clientes.php';
+require_once '../clases/Usuario.php';
+require_once '../clases/Db.php';
 
 use app\clases\Db;
 use app\clases\Usuario;
 use app\clases\Clientes;
+
+//if(!isset($_SESSION['usuario']))
+//{
+//   $_SESSION['mensaje']= 'Usuario invalido';
+//   header('Location:../index.php');
+//   exit();
+//}
 
 if(isset($_POST['btnGuardarCliente']))
 {
@@ -23,15 +30,20 @@ if(isset($_POST['btnGuardarCliente']))
         $conn->commit();
     }catch(TypeError $e){
         $conn->rollBack();
-        $mensaje= 'Error al obtener la información de la base de datos';
+        $_SESSION['mensaje'] = 'Error al obtener la información de la base de datos';
     }catch(Throwable $e){
             
         //$conn->rollback();
         error_log($e->getMessage());
-        $mensaje= 'Error inesperado, consulte con su administrador';
+        $_SESSION['mensaje'] = 'Error inesperado, consulte con su administrador';
+        header('Location: ../index.php');
+        exit();
     }
+    $_SESSION['mensaje'] = 'El cliente se cargo de manera exitosa';
+    header('Location:../paginas/presupuesto.php');
 }else{
-    $mensaje = 'No se recibió la información necesaria para crear un cliente';
+    $_SESSION['mensaje'] = 'No se recibió la información necesaria para crear un cliente';
+    
 }
 
 

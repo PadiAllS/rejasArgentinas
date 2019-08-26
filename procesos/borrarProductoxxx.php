@@ -10,8 +10,7 @@ if(isset($_GET['delId']))
         $idProducto= $_GET['delId'];
         $producto = Producto::buscarPorId($idProducto);
         $mensaje = ($producto->eliminar()===TRUE)?"El Producto {$producto->getNombreProducto()} se ha borrado correctamente":"Ocurrió un error al intentar borrar a {$producto->getNombreProducto()}";
-        header('location:listadoProducto.php');
-        exit();
+        
     }catch(TypeError $e){
         $mensaje = 'Error al obtener la información del producto en la base de datos';
     }catch(NullObjectError $e)
@@ -21,6 +20,8 @@ if(isset($_GET['delId']))
         error_log($e->getMessage());
         $mensaje = 'Error inesperado, consulte con su administrador';
     }
+    header('location:listadoProducto.php');
+    exit();
 }else{
     $mensaje = 'No se recibió el identificador necesario para realizar la operación';
 }

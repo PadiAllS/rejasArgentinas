@@ -16,16 +16,29 @@ require_once 'header.php';
 							</li>
 							<li data-slide-to="2" data-target="#carousel-558599">
 							</li>
+							<li data-slide-to="3" data-target="#carousel-558599">
+							</li>
 						</ol>
 						<div class="carousel-inner">
 							<div class="carousel-item active">
-                                                            <img class="d-block w-100" alt="Carousel Bootstrap First" src="imagen/reja11.jpg" />
+                                                            <img class="d-block w-100" alt="Carousel Bootstrap First" src="imagen/robo1.jpg" />
+								<div class="carousel-caption">
+									<h4>
+										QUE NO TE PASE!...
+									</h4>
+									<p>
+										.
+									</p>
+								</div>
+							</div>
+							<div class="carousel-item">
+                                                            <img class="d-block w-100" alt="Carousel Bootstrap Second" src="imagen/reja11.jpg" />
 								<div class="carousel-caption">
 									<h4>
 										MODELOS PROPIOS Y A PEDIDO
 									</h4>
 									<p>
-										.
+									.
 									</p>
 								</div>
 							</div>

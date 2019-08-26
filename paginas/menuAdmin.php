@@ -5,20 +5,29 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-require_once 'header.php';
+require_once '../header.php';
 ?>
-
+<div class="row container">
+    <a><?php
+                if(isset($_SESSION['mensaje']))
+                {  
+                    echo ($_SESSION['mensaje']);
+                    unset($_SESSION['mensaje']);
+                }
+        ?>
+    </a>
+</div>
 <div id="accordion">
   <div class="card">
     <div class="card-header" id="headingOne">
       <h5 class="mb-0">
-        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
           Clientes
         </button>
       </h5>
     </div>
 
-    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
       <div class="card-body">
         <?php
         require_once '../procesos/listadoClientes.php';
